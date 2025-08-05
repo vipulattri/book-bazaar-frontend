@@ -1,12 +1,11 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 
-// Static components
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+const Navbar = dynamic(() => import('../components/Navbar'), { ssr: false });
+const Footer = dynamic(() => import('../components/Footer'), { ssr: false });
 
-// Dynamic components (with or without SSR)
 const HeroSection = dynamic(() => import('../components/HeroSection'), {
   ssr: false,
   loading: () => <div className="min-h-[80vh]" />
@@ -23,10 +22,20 @@ const Categories = dynamic(() => import('../components/Categories'), { ssr: fals
 const FeaturedBooks = dynamic(() => import('../components/FeaturedBooks'), { ssr: false });
 
 export default function HomePage() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    // Optional loading UI while client-side JS is loading
+    return <div className="min-h-screen bg-white" />;
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-
       <main className="overflow-hidden">
         <HeroSection />
         <Stats />
@@ -35,7 +44,6 @@ export default function HomePage() {
         <Categories />
         <FeaturedBooks />
       </main>
-
       <Footer />
     </div>
   );
