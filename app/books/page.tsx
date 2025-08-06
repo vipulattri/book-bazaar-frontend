@@ -81,7 +81,7 @@ export default function BooksPage() {
     const fetchBooks = async () => {
       try {
         setLoading(true)
-        let url = `http://localhost:5000/api/books?`
+        let url = ` https://book-bazaar-backend-nem0.onrender.com/api/books?`
         
         // Add filters to the URL
         const params = new URLSearchParams()
@@ -241,7 +241,7 @@ export default function BooksPage() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch('http://localhost:5000/api/books', {
+      const response = await fetch(' https://book-bazaar-backend-nem0.onrender.com/api/books', {
         method: 'POST',
         headers,
         body: formData,

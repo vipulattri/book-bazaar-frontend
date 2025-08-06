@@ -10,7 +10,7 @@ interface Message {
   timestamp: string
 }
 
-const API_URL = "http://localhost:5000/api/messages"
+const API_URL = " https://book-bazaar-backend-nem0.onrender.com/api/messages"
 
 export default function BookBazaarChat() {
   const chatContainerRef = useRef<HTMLDivElement>(null)
