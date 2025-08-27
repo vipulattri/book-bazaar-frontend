@@ -17,16 +17,16 @@ import { Textarea } from "@/components/ui/textarea"
 import { Heart, MessageCircle, Star, Filter, Grid, List, GraduationCap, Gift, Plus, AlertTriangle, X, ChevronLeft, ChevronRight } from "lucide-react"
 
 interface Book {
-  _id: string;
-  title: string;
-  author: string;
-  genre: string;
-  condition: string;
-  price: number;
+  _id?: string;
+  title?: string;
+  author?: string;
+  genre?: string;
+  condition?: string;
+  price?: number;
   Subject?: string;
   image?: string;
-  userId: string;
-  createdAt: string;
+  userId?: string;
+  createdAt?: string;
   originalPrice?: number;
   course?: string;
   rating?: number;
@@ -36,7 +36,7 @@ interface Book {
   isDonation?: boolean;
   Name?: string;
   Address?: string;
-  phone: string;
+  phone?: string;
   email?: string;
   description?: string;
 }
@@ -184,46 +184,26 @@ export default function BooksPage() {
     }
   };
 
-  const validateForm = () => {
-    const requiredFields = ['title', 'author', 'Name', 'Address', 'phone']
-    const missingFields = requiredFields.filter(field => !newBook[field as keyof typeof newBook])
-    
-    if (missingFields.length > 0) {
-      setSubmitError(`Please fill in all required fields: ${missingFields.join(', ')}`)
-      return false
-    }
-
-    if (!newBook.isDonation && (newBook.price <= 0)) {
-      setSubmitError('Please enter a valid price or mark as donation')
-      return false
-    }
-
-    return true
-  }
-
   const handleSubmitNewBook = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!validateForm()) {
-      return
-    }
-
     setIsSubmitting(true)
     setSubmitError("")
 
     try {
       const formData = new FormData();
-      formData.append('title', newBook.title.trim());
-      formData.append('author', newBook.author.trim());
+      // Only append fields that have values
+      if (newBook.title) formData.append('title', newBook.title.trim());
+      if (newBook.author) formData.append('author', newBook.author.trim());
       formData.append('genre', newBook.genre);
       formData.append('condition', newBook.condition);
       formData.append('price', newBook.isDonation ? '0' : newBook.price.toString());
-      formData.append('Subject', newBook.Subject.trim());
-      formData.append('Name', newBook.Name.trim());
-      formData.append('Address', newBook.Address.trim());
-      formData.append('phone', newBook.phone.trim());
-      formData.append('email', newBook.email?.trim() || '');
-      formData.append('description', newBook.description?.trim() || '');
+      if (newBook.Subject) formData.append('Subject', newBook.Subject.trim());
+      if (newBook.Name) formData.append('Name', newBook.Name.trim());
+      if (newBook.Address) formData.append('Address', newBook.Address.trim());
+      if (newBook.phone) formData.append('phone', newBook.phone.trim());
+      if (newBook.email) formData.append('email', newBook.email.trim());
+      if (newBook.description) formData.append('description', newBook.description.trim());
       formData.append('isDonation', newBook.isDonation.toString());
       
       if (imageFile) {
@@ -441,7 +421,7 @@ export default function BooksPage() {
                     <div className="grid gap-4 py-4">
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="title" className="text-right">
-                          Title*
+                          Title
                         </Label>
                         <Input
                           id="title"
@@ -449,13 +429,12 @@ export default function BooksPage() {
                           value={newBook.title}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          required
                           placeholder="Enter book title"
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="author" className="text-right">
-                          Author*
+                          Author
                         </Label>
                         <Input
                           id="author"
@@ -463,13 +442,12 @@ export default function BooksPage() {
                           value={newBook.author}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          required
                           placeholder="Enter author name"
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="genre" className="text-right">
-                          Genre*
+                          Genre
                         </Label>
                         <Select 
                           value={newBook.genre}
@@ -491,7 +469,7 @@ export default function BooksPage() {
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="condition" className="text-right">
-                          Condition*
+                          Condition
                         </Label>
                         <Select 
                           value={newBook.condition}
@@ -561,7 +539,7 @@ export default function BooksPage() {
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="Name" className="text-right">
-                          Your Name*
+                          Your Name
                         </Label>
                         <Input
                           id="Name"
@@ -569,7 +547,6 @@ export default function BooksPage() {
                           value={newBook.Name}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          required
                           placeholder="Enter your name"
                         />
                       </div>
@@ -589,7 +566,7 @@ export default function BooksPage() {
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="Address" className="text-right">
-                          Your Address*
+                          Your Address
                         </Label>
                         <Textarea
                           id="Address"
@@ -597,14 +574,13 @@ export default function BooksPage() {
                           value={newBook.Address}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          required
                           placeholder="Enter your address"
                           rows={3}
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="phone" className="text-right">
-                          Phone Number*
+                          Phone Number
                         </Label>
                         <Input
                           id="phone"
@@ -612,7 +588,6 @@ export default function BooksPage() {
                           value={newBook.phone}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          required
                           placeholder="Enter your phone number"
                         />
                       </div>
@@ -637,7 +612,7 @@ export default function BooksPage() {
                       {!newBook.isDonation && (
                         <div className="grid grid-cols-4 items-center gap-4">
                           <Label htmlFor="price" className="text-right">
-                            Price ($)*
+                            Price ($)
                           </Label>
                           <Input
                             id="price"
@@ -648,7 +623,6 @@ export default function BooksPage() {
                             className="col-span-3"
                             min="0"
                             step="0.01"
-                            required={!newBook.isDonation}
                             disabled={newBook.isDonation}
                             placeholder="0.00"
                           />

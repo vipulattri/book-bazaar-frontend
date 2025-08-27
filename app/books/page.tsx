@@ -17,27 +17,25 @@ import { Textarea } from "@/components/ui/textarea"
 import { Heart, MessageCircle, Star, Filter, Grid, List, GraduationCap, Gift, Plus, AlertTriangle, X, ChevronLeft, ChevronRight } from "lucide-react"
 
 interface Book {
-  _id: string;
-  title: string;
-  author: string;
-  genre: string;
-  condition: string;
-  price: number;
+  _id?: string;
+  title?: string;
+  author?: string;
+  genre?: string;
+  condition?: string;
+  price?: number;
   Subject?: string;
   image?: string;
-  userId: string;
-  createdAt: string;
+  userId?: string;
+  createdAt?: string;
   originalPrice?: number;
   course?: string;
   rating?: number;
   seller?: string;
   year?: string;
-  university?: string;
-  isDonation?: boolean;
   Name?: string;
   Address?: string;
-  phone: string;
-  email?: string;
+  phone?: string;
+  email ?: string;
   description?: string;
 }
 
