@@ -81,7 +81,7 @@ export default function BooksPage() {
     const fetchBooks = async () => {
       try {
         setLoading(true)
-        let url = 'https://book-bazaar-backend-nem0.onrender.com/api/books?`
+        let url = `https://book-bazaar-backend-nem0.onrender.com/api/books?`
         
         // Add filters to the URL
         const params = new URLSearchParams()
