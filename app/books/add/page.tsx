@@ -605,14 +605,14 @@ export default function BooksPage() {
                             className="rounded mr-2"
                           />
                           <label htmlFor="isDonation" className="text-sm">
-                            Check this if you're donating the book (price will be set to $0)
+                            Check this if you're donating the book (price will be set to Rs.0)
                           </label>
                         </div>
                       </div>
                       {!newBook.isDonation && (
                         <div className="grid grid-cols-4 items-center gap-4">
                           <Label htmlFor="price" className="text-right">
-                            Price ($)
+                            Price (Rs.)
                           </Label>
                           <Input
                             id="price"
@@ -791,7 +791,7 @@ export default function BooksPage() {
                                 <span className="text-2xl font-bold text-green-600">FREE</span>
                                 {book.originalPrice && (
                                   <span className="text-sm text-muted-foreground ml-2 line-through">
-                                    ${book.originalPrice}
+                                    Rs.{book.originalPrice}
                                   </span>
                                 )}
                               </div>
@@ -801,10 +801,10 @@ export default function BooksPage() {
                                 {book.originalPrice && (
                                   <>
                                     <span className="text-sm text-muted-foreground ml-2 line-through">
-                                      ${book.originalPrice}
+                                      Rs.{book.originalPrice}
                                     </span>
                                     <Badge variant="secondary" className="ml-2 text-xs">
-                                      Save ${(book.originalPrice - book.price).toFixed(2)}
+                                      Save Rs.{(book.originalPrice - book.price).toFixed(2)}
                                     </Badge>
                                   </>
                                 )}
