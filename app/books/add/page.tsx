@@ -81,7 +81,7 @@ export default function BooksPage() {
     const fetchBooks = async () => {
       try {
         setLoading(true)
-        let url = ` https://book-bazaar-backend-nem0.onrender.com/api/books?`
+        let url = 'https://book-bazaar-backend-nem0.onrender.com/api/books?`
         
         // Add filters to the URL
         const params = new URLSearchParams()
@@ -192,18 +192,18 @@ export default function BooksPage() {
 
     try {
       const formData = new FormData();
-      // Only append fields that have values
-      if (newBook.title) formData.append('title', newBook.title.trim());
-      if (newBook.author) formData.append('author', newBook.author.trim());
-      formData.append('genre', newBook.genre);
-      formData.append('condition', newBook.condition);
-      formData.append('price', newBook.isDonation ? '0' : newBook.price.toString());
-      if (newBook.Subject) formData.append('Subject', newBook.Subject.trim());
-      if (newBook.Name) formData.append('Name', newBook.Name.trim());
-      if (newBook.Address) formData.append('Address', newBook.Address.trim());
-      if (newBook.phone) formData.append('phone', newBook.phone.trim());
-      if (newBook.email) formData.append('email', newBook.email.trim());
-      if (newBook.description) formData.append('description', newBook.description.trim());
+      // Append all fields regardless of whether they have values
+      formData.append('title', newBook.title.trim() || '');
+      formData.append('author', newBook.author.trim() || '');
+      formData.append('genre', newBook.genre || '');
+      formData.append('condition', newBook.condition || '');
+      formData.append('price', newBook.isDonation ? '0' : newBook.price.toString() || '0');
+      formData.append('Subject', newBook.Subject.trim() || '');
+      formData.append('Name', newBook.Name.trim() || '');
+      formData.append('Address', newBook.Address.trim() || '');
+      formData.append('phone', newBook.phone.trim() || '');
+      formData.append('email', newBook.email.trim() || '');
+      formData.append('description', newBook.description.trim() || '');
       formData.append('isDonation', newBook.isDonation.toString());
       
       if (imageFile) {
@@ -221,7 +221,7 @@ export default function BooksPage() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch(' https://book-bazaar-backend-nem0.onrender.com/api/books', {
+      const response = await fetch('https://book-bazaar-backend-nem0.onrender.com/api/books', {
         method: 'POST',
         headers,
         body: formData,
@@ -406,7 +406,7 @@ export default function BooksPage() {
                   <DialogHeader>
                     <DialogTitle>List a New Book</DialogTitle>
                     <DialogDescription>
-                      Fill in the details of the book you want to sell or donate.
+                      Fill in the details of the book you want to sell or donate. All fields are optional.
                     </DialogDescription>
                   </DialogHeader>
                   
@@ -429,7 +429,7 @@ export default function BooksPage() {
                           value={newBook.title}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          placeholder="Enter book title"
+                          placeholder="Enter book title (optional)"
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
@@ -442,7 +442,7 @@ export default function BooksPage() {
                           value={newBook.author}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          placeholder="Enter author name"
+                          placeholder="Enter author name (optional)"
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
@@ -497,7 +497,7 @@ export default function BooksPage() {
                           value={newBook.Subject}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          placeholder="e.g., Calculus, Programming"
+                          placeholder="e.g., Calculus, Programming (optional)"
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
@@ -510,7 +510,7 @@ export default function BooksPage() {
                           value={newBook.description}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          placeholder="Enter book description"
+                          placeholder="Enter book description (optional)"
                           rows={3}
                         />
                       </div>
@@ -547,7 +547,7 @@ export default function BooksPage() {
                           value={newBook.Name}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          placeholder="Enter your name"
+                          placeholder="Enter your name (optional)"
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
@@ -561,7 +561,7 @@ export default function BooksPage() {
                           value={newBook.email}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          placeholder="Enter your email"
+                          placeholder="Enter your email (optional)"
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
@@ -574,7 +574,7 @@ export default function BooksPage() {
                           value={newBook.Address}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          placeholder="Enter your address"
+                          placeholder="Enter your address (optional)"
                           rows={3}
                         />
                       </div>
@@ -588,7 +588,7 @@ export default function BooksPage() {
                           value={newBook.phone}
                           onChange={handleNewBookChange}
                           className="col-span-3"
-                          placeholder="Enter your phone number"
+                          placeholder="Enter your phone number (optional)"
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
@@ -624,7 +624,7 @@ export default function BooksPage() {
                             min="0"
                             step="0.01"
                             disabled={newBook.isDonation}
-                            placeholder="0.00"
+                            placeholder="0.00 (optional)"
                           />
                         </div>
                       )}
